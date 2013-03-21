@@ -1,4 +1,4 @@
-module.exports = function(body) {
+module.exports = function (body) {
   body = body.replace(/(&|\?)AWSAccessKeyId=[^&]*/, '')
     .replace(/(&|\?)Timestamp=[^&]*/, '')
     .replace(/(&|\?)Signature=[^&]*/, '')

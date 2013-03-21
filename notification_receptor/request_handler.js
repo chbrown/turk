@@ -1,5 +1,5 @@
 var EventEmitter = require('events').EventEmitter;
-  
+
 function parseEventParam(paramParts, value, events) {
   var index = parseInt(paramParts[1], 10) - 1;
   var event = events[index] || {};
@@ -9,7 +9,7 @@ function parseEventParam(paramParts, value, events) {
 
 function parseEvents(params) {
   var events = [];
-  Object.keys(params).forEach(function(param) {
+  Object.keys(params).forEach(function (param) {
     var parts = param.split('.');
     if (parts[0] == 'Event') {
       parseEventParam(parts, params[param], events);
@@ -25,23 +25,23 @@ function lowerFirstChar(str) {
 var emitter = new EventEmitter();
 
 function handle(req, res) {
-  var self = this
-    , events;
-    
+  var self = this,
+    events;
+
   delete req.query.method;
   delete req.query.Signature;
   delete req.query.Timestamp;
   delete req.query.Version;
 
   events = parseEvents(req.query);
-  events.forEach(function(event) {
+  events.forEach(function (event) {
     event.eventType = lowerFirstChar(event.EventType);
     emitter.emit('any', event);
     emitter.emit(event.eventType, event);
   });
-  
+
   res.end();
-  
+
 };
 
 module.exports = handle;
