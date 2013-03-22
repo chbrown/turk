@@ -88,7 +88,7 @@ module.exports = function (config) {
   };
 
 
-  /*
+  /**
    * create a HIT
    *
    * @param {hitTypeId} the HIT type id (string)
@@ -114,7 +114,7 @@ module.exports = function (config) {
     });
   };
 
-  /*
+  /**
    * force expire a HIT
    *
    * @param {hitId} the ID of the HIT to expire
@@ -142,10 +142,10 @@ module.exports = function (config) {
       }
 
       callback(err);
-    })
-  }
+    });
+  };
 
-  /*
+  /**
    * dispose of a HIT
    *
    * @param {hitId} the ID of the HIT to dispose of
@@ -174,11 +174,11 @@ module.exports = function (config) {
 
       callback(err);
     });
-  }
+  };
 
-  /*
+  /**
    * Disables specified HIT.
-   * 
+   *
    * @param {hitId} The ID of the HIT to retrieve (String)
    * @param {callback} function with signature (Error error || null, HIT hit)
    *
@@ -209,7 +209,7 @@ module.exports = function (config) {
   };
 
 
-  /*
+  /**
    * Retrieves all HITs
    *
    * @param {options.sortProperty} can sort by title | reward | expiration | creationTime. Defaults to "expiration"
@@ -280,7 +280,7 @@ module.exports = function (config) {
     });
   };
 
-  /*
+  /**
    * Retrieves the details of the specified HIT.
    *
    * @param {hitId} The ID of the HIT to retrieve (String)
@@ -319,7 +319,7 @@ module.exports = function (config) {
   };
 
 
-  /*
+  /**
    * retrieves the reviewable HIT
    *
    * @param {options.hitTypeId} the HIT type id (string), not required
@@ -396,7 +396,7 @@ module.exports = function (config) {
   };
 
 
-  /*
+  /**
    * Gets the assigments for a HIT
    *
    * @param {hitID} The ID of the HIT
@@ -464,7 +464,7 @@ module.exports = function (config) {
   };
 
 
-  /*
+  /**
    * Gets the assigments for this HIT
    *
    * @param {options.assignmentStatus} The status of the assignments to return (string). Valid Values: Submitted | Approved | Rejected. Default: None

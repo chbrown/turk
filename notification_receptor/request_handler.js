@@ -41,8 +41,7 @@ function handle(req, res) {
   });
 
   res.end();
-
-};
+}
 
 module.exports = handle;
 module.exports.emitter = emitter;

@@ -1,15 +1,18 @@
-module.exports = function (config) {
-  var signature = require('../lib/signature')
+var helpers = require('../lib/helpers');
 
-  return function (req, res, next) {
-      var awsSignature = req.params.Signature;
-      var timestamp = req.params.Timestamp;
+module.exports = function(config) {
+  return function(req, res, next) {
+    var timestamp = req.params.Timestamp;
+    var service = "AWSMechanicalTurkRequesterNotification";
+    var operation = "Notify";
+    // var awsSignature = req.params.Signature;
+    var awsSignature = helpers.sign(config.secretAccessKey, service, operation, timestamp);
 
-      if (awsSignature = !signature(config.secretAccessKey, "AWSMechanicalTurkRequesterNotification", "Notify", timestamp)) {
-        next(new Error('Invalid signature'));
-      }
-      else {
-        next();
-      }
-    };
+    if (!awsSignature) {
+      next(new Error('Invalid signature'));
+    }
+    else {
+      next();
+    }
+  };
 };

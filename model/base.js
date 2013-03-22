@@ -1,4 +1,4 @@
-require('underscore');
+// var __ = require('underscore');
 var Validator = require('validator').Validator;
 
 var Base = module.exports = function () {};
@@ -16,7 +16,7 @@ Base.prototype.valid = function () {
     v.error = function (msg) {
       self.errors.push(msg);
       valid = false;
-    }
+    };
 
     self.validate(v);
 
@@ -29,11 +29,11 @@ Base.prototype.valid = function () {
 
 Base.responseKeyToObjectKey = function (responseKey) {
   return responseKey.charAt(0).toLowerCase() + responseKey.slice(1);
-}
+};
 
 Base.objectKeyToResponseKey = function (responseKey) {
   return responseKey.charAt(0).toUpperCase() + responseKey.slice(1);
-}
+};
 
 Base.prototype.populateFromResponse = function (response, hints) {
   var self = this;
@@ -42,7 +42,7 @@ Base.prototype.populateFromResponse = function (response, hints) {
   Object.keys(response).forEach(function (key) {
     var newKey;
     if (hints[key]) {
-      newKey = hints[key]
+      newKey = hints[key];
     }
     else {
       newKey = Base.responseKeyToObjectKey(key);
