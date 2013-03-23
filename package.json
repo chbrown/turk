@@ -17,15 +17,13 @@
     }
   ],
   "dependencies": {
-    "request": "2.9.x",
-    "validator": "0.4.x",
+    "request": "*",
+    "validator": "*",
     "express": "*",
     "winston": "*",
     "underscore": "*",
-    "sax": "0.3.x"
-  },
-  "engines": {
-    "node": ">=0.4.0"
+    "sax": "*",
+    "libxmljs": "*"
   },
   "devDependencies": {
     "nock": "*"
