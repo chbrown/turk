@@ -16,7 +16,15 @@ Then run:
 
       $ make
 
-# Mechanical Turk Node API
+# TODO
+
+* Log into outside file (configurable)
+* Consider using something like Hoptoad to get error notifications
+* Stats (remote monitoring API / collecting)?
+
+* Load wsdl automatically https://github.com/polotek/libxmljs
+
+# API
 
 The Mechanical Node API is composed of:
 
