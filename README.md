@@ -1,10 +1,25 @@
-# Intro
+# `mturk`
 
-Amazon Mechanical Turk API wrapper for Node.
+Amazon Mechanical Turk API wrapper for Node.js.
 
-# Install
+This is becoming more and more a wholesale rewrite of [jefftimesten/mturk].
 
-    npm install mturk
+## Featuring
+
+* Cleaner code (with standard formatting)
+* Less ORM, fuller coverage of Mechanical Turk API
+
+## Install
+
+    npm install git://github.com/chbrown/mturk.git
+
+Or merge the following into your `package.json`:
+
+    {
+      "dependencies": {
+        "mturk": "git://github.com/chbrown/mturk.git"
+      }
+    }
 
 # Tests
 
@@ -21,8 +36,6 @@ Then run:
 * Log into outside file (configurable)
 * Consider using something like Hoptoad to get error notifications
 * Stats (remote monitoring API / collecting)?
-
-* Load wsdl automatically https://github.com/polotek/libxmljs
 
 # API
 

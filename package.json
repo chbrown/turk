@@ -1,19 +1,20 @@
 {
   "name": "mturk",
   "description": "Amazon Mechanical Turk API wrapper for Node",
-  "version": "0.4.1",
+  "version": "0.4.2a",
   "author": "Pedro Teixeira",
   "repository": {
     "type": "git",
-    "url": "http://github.com/pgte/mturk.git"
+    "url": "http://github.com/chbrown/mturk.git"
   },
-  "contributors": [
-    {
+  "contributors": [{
       "name": "Pedro Teixeira",
       "email": "pedro.teixeira@gmail.com"
-    },
-    {
+    }, {
       "name": "Micah Silverman"
+    }, {
+      "name": "Christopher Brown",
+      "email": "io@henrian.com"
     }
   ],
   "dependencies": {
@@ -22,7 +23,6 @@
     "express": "*",
     "winston": "*",
     "underscore": "*",
-    "sax": "*",
     "libxmljs": "*",
     "xml-mapping": "*",
     "underscore": "*"
