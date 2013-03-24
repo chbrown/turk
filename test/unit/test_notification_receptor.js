@@ -5,8 +5,8 @@ var config = {
   },
   secretAccessKey: "fksdlfkjsdlkfjsdlfkjslkfjsdlkfjsdlkfjsdlfkj"
 }, receptor = require('../../notification_receptor')(config),
-  assert = require('assert'),
-  uri = require('../../lib/uri');
+  assert = require('assert');
+  // uri = require('../../lib/uri');
 
 
 exports.testReceptor = function (beforeExit) {

@@ -2,12 +2,9 @@ var EventEmitter = require('events').EventEmitter;
 module.exports = function (conf) {
   var notificationReceptor = require('./notification_receptor')(conf);
   var HIT = require('./model/hit')(conf);
-  var uri = require('./lib/uri');
+  // var uri = require('./lib/uri');
 
   var POLLER_INTERVAL_MS = conf.poller && conf.poller.frequency_ms || 60000;
-
-  uri.setBaseURI(conf.url || "http://mechanicalturk.amazonaws.com")
-
 
   var notification = new EventEmitter();
   var ret = notification;
@@ -69,7 +66,7 @@ module.exports = function (conf) {
 
         if (!err) {
           hits.forEach(function (hit) {
-            emitHitReviewable(hit.id, true)
+            emitHitReviewable(hit.id, true);
           });
           if (numResults > 0 && totalNumResults > numResults) {
             reschedule = false;
@@ -105,6 +102,7 @@ module.exports = function (conf) {
   ret.HITType = require('./model/hit_type')(conf);
   ret.Notification = require('./model/notification')(conf);
   ret.Assignment = require('./model/assignment')(conf);
+  ret.doOperation = require('./lib/operations')(conf);
 
   return ret;
 };

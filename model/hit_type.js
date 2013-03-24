@@ -1,7 +1,7 @@
 var util = require('util');
 
 module.exports = function (conf) {
-  var request = require('../lib/request')(conf);
+  // var request = require('../lib/request')(conf);
   var Base = require('./base');
   var Notification = require('./notification')(conf);
   var ret = {};
@@ -30,7 +30,7 @@ module.exports = function (conf) {
         v.error("Error in reward: " + err);
       });
     v.check(this.assignmentDurationInSeconds, 'Please enter an assignmentDurationInSeconds').notNull().isInt();
-    if (this.keywords, 'Please enter valid keywords') v.check(this.keywords).len(0, 1000);
+    if (this.keywords) { v.check(this.keywords, 'Please enter valid keywords').len(0, 1000); }
     if (this.autoApprovalDelayInSeconds) {
       v.check(this.autoApprovalDelayInSeconds, 'Please enter a valid autoApprovalDelayInSeconds').notNull().isInt();
       if (this.autoApprovalDelayInSeconds > 2592000) v.error('autoApprovalDelayInSeconds must be <= 2592000');

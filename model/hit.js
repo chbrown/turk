@@ -1,9 +1,10 @@
+var util = require('util');
+
 module.exports = function (config) {
-  var request = require('../lib/request')(config),
-    inherits = require('util').inherits,
-    Base = require('./base'),
-    Assignment = require('./assignment')(config),
-    ret = {};
+  // var request = require('../lib/request')(config);
+  var Base = require('./base');
+  var Assignment = require('./assignment')(config);
+  var ret = {};
 
   function HIT(hitTypeId, question, lifeTimeInSeconds, maxAssignments, requesterAnnotation) {
     this.errors = [];
@@ -14,7 +15,7 @@ module.exports = function (config) {
     if (requesterAnnotation) this.requesterAnnotation = requesterAnnotation;
   }
 
-  inherits(HIT, Base);
+  util.inherits(HIT, Base);
 
   HIT.prototype.errors = function () {
     return this.errors;

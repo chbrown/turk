@@ -9,7 +9,7 @@ var config = {
   accessKeyId: aws_creds.accessKeyId,
   secretAccessKey: aws_creds.secretAccessKey
 }, assert = require('assert'),
-  uri = require('../../lib/uri'),
+  // uri = require('../../lib/uri'),
   HITType = require('../../model/hit_type')(config),
   HIT = require('../../model/hit')(config),
   Question = require('../../model/question')(config);

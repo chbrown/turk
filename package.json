@@ -23,7 +23,9 @@
     "winston": "*",
     "underscore": "*",
     "sax": "*",
-    "libxmljs": "*"
+    "libxmljs": "*",
+    "xml-mapping": "*",
+    "underscore": "*"
   },
   "devDependencies": {
     "nock": "*"

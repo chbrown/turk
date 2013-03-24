@@ -1,5 +1,5 @@
-var uri = require('../../lib/uri'),
-  assert = require('assert');
+// var uri = require('../../lib/uri'),
+var assert = require('assert');
 
 exports.testSimple = function () {
   assert.equal(

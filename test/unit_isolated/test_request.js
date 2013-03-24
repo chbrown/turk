@@ -6,8 +6,8 @@ var config = {
   secretAccessKey: "fksdlfkjsdlkfjsdlfkjslkfjsdlkfjsdlkfjsdlfkj"
 }, assert = require('assert'),
   nock = require('nock'),
-  filterBody = require('../filterBody'),
-  request = require('../../lib/request')(config);
+  filterBody = require('../filterBody');
+  // request = require('../../lib/request')(config);
 
 var status;
 

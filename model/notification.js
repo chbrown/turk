@@ -39,8 +39,7 @@ module.exports = function (conf) {
     }
   };
 
-
-  /*
+  /**
    * Instantiates a new Notification
    *
    * @param {destination} The destination for notification messages (string)
