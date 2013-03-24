@@ -8,20 +8,17 @@ var config = {
   nock = require('nock'),
   filterBody = require('../filterBody'),
   HITType = require('../../model/hit_type')(config),
-  Notification = require('../../model/notification')(config),
-  Price = require('../../model/price')(config);
+  Notification = require('../../model/notification')(config);
 
 exports.testCreate = function (beforeExit) {
   var calledback = false,
-    reward;
+    reward = {currencyCode: 'USD', amount: 0.1};
 
   var scope = nock('http://mechanicalturk.amazonaws.com')
     .filteringRequestBody(filterBody)
     .filteringPath(filterBody)
     .post('/', 'Title=title&Description=description&Reward.1.Amount=0.1&Reward.1.CurrencyCode=USD&&AssignmentDurationInSeconds=3600&Keywords=keywords&Service=AWSMechanicalTurkRequester&Operation=RegisterHITType')
     .replyWithFile(200, __dirname + '/../static/hit_type_register_response.xml');
-
-  reward = new Price(0.1, 'USD');
 
   HITType.create('title', 'description', reward, 3600, {
     keywords: 'keywords'

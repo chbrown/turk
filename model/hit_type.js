@@ -1,10 +1,10 @@
+var util = require('util');
+
 module.exports = function (conf) {
-  var request = require('../lib/request')(conf),
-    inherits = require('util').inherits,
-    Base = require('./base'),
-    Notification = require('./notification')(conf),
-    Price = require('./price')(conf),
-    ret = {};
+  var request = require('../lib/request')(conf);
+  var Base = require('./base');
+  var Notification = require('./notification')(conf);
+  var ret = {};
 
   function HITType(title, description, reward, assignmentDurationInSeconds, keywords, autoApprovalDelayInSeconds, qualificationRequirement) {
     this.errors = [];
@@ -17,7 +17,7 @@ module.exports = function (conf) {
     if (qualificationRequirement) this.qualificationRequirement = qualificationRequirement;
   }
 
-  inherits(HITType, Base);
+  util.inherits(HITType, Base);
 
   HITType.prototype.errors = function () {
     return this.errors;
@@ -46,23 +46,23 @@ module.exports = function (conf) {
     Base.prototype.populateFromResponse.call(this, response, {
       HITTypeId: 'hitTypeId'
     });
-  }
+  };
 
   HITType.prototype.create = function (callback) {
-    var self = this,
-      options, remoteErrosr;
+    var self = this;
+    var remoteErrors;
 
     if (!this.valid()) {
       callback(this.errors);
       return;
     }
 
-    options = {
+    var options = {
       Title: this.title,
       Description: this.description,
       Reward: this.reward,
       AssignmentDurationInSeconds: this.assignmentDurationInSeconds
-    }
+    };
     if (this.keywords) options.Keywords = this.keywords;
     if (this.autoApprovalDelayInSeconds) options.autoApprovalDelayInSeconds = this.autoApprovalDelayInSeconds;
     if (this.qualificationRequirement) options.QualificationRequirement = this.qualificationRequirement;
@@ -105,7 +105,7 @@ module.exports = function (conf) {
    * @param {options.autoApprovalDelayInSeconds} An amount of time, in seconds, after an assignment for a HIT of this type has been submitted, that the assignment becomes Approved automatically, unless the Requester explicitly rejects it. integer. Optional. Default is 2592000 (30 days)
    * @param {options.qualificationRequirement} a QualificationRequirement structure
    * @param {callback} function with signature (Array errors || null, HITType hitType)
-   * 
+   *
    */
 
   ret.create = function (title, description, reward, assignmentDurationInSeconds, options, callback) {
@@ -132,7 +132,7 @@ module.exports = function (conf) {
    * @param {notification} the notification structure
    * @param {active} (the lifetime, in seconds (int))bookean
    * @param {callback} function with signature (error)
-   * 
+   *
    */
   ret.setNotification = function setNotification(hitTypeId, notification, active, callback) {
     var options = {
@@ -157,7 +157,7 @@ module.exports = function (conf) {
    * @param {notification} the notification structure
    * @param {active} (the lifetime, in seconds (int))bookean
    * @param {callback} function with signature (error)
-   * 
+   *
    */
   HITType.prototype.setNotification = function (notification, active, callback) {
     setNotification(this.id, notification, active, callback);

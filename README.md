@@ -36,7 +36,6 @@ The Mechanical Node API is composed of:
 
 ### Auxiliary models (just data structures, really):
 
-* Price - new
 * Notification - build
 
 ### Notification
@@ -214,25 +213,13 @@ Gets the assigments for a HIT
 [API Documentation](http://docs.amazonwebservices.com/AWSMechTurk/latest/AWSMturkAPI/ApiReference_RejectAssignmentOperation.html)
 
 
-## Price
-
-    var Price = require('mturk').Price;
-    var amount = 0.15;
-    var currencyCode = 'USD';
-    var price = new Price(amount, currencyCode);
-
-### new Price(amount, currencyCode)
-
-Creates a new Price structure.
-
-
 ## Example HIT Creation
 
 
 Here is an example of creating a HITType, then rendering a question XML string using EJS, and finally creating a HIT.
 
     // 1. Create the HITType
-    var price = new Price("2.50", "USD");
+    var price = {currencyCode: 'USD', amount: 2.5};
     var title = "Touch Your Toes";
     var description = "Exercise is good for you!";
     var duration = 60 * 10; // #seconds Worker has to complete after accepting

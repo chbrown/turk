@@ -12,15 +12,14 @@ var config = {
   uri = require('../../lib/uri'),
   HITType = require('../../model/hit_type')(config),
   HIT = require('../../model/hit')(config),
-  Price = require('../../model/price')(config),
-  Question = require('../../model/question')(config)
+  Question = require('../../model/question')(config);
 
   uri.setBaseURI(config.url);
 
 exports.testCreateHITTypeAndSearchAndExpireAndDispose = function (beforeExit) {
   var finished = false;
 
-  var reward = new Price(0.1, 'USD');
+  var reward = {currencyCode: 'USD', amount: 0.1};
 
   HITType.create('Extract info from receipt', 'Fill a form with the data from a scanned paper receipt', reward, 3600, {
     keywords: 'receipt'
