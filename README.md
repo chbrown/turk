@@ -1,8 +1,8 @@
-# `mturk`
+# Amazon Mechanical Turk: `mechturk`
 
-Amazon Mechanical Turk API wrapper for Node.js.
+Amazon Mechanical Turk API for Node.js.
 
-This is becoming more and more a wholesale rewrite of [jefftimesten/mturk].
+This is based off [jefftimesten/mturk], but I'm rewriting most of the mechanics.
 
 ## Featuring
 
@@ -11,13 +11,13 @@ This is becoming more and more a wholesale rewrite of [jefftimesten/mturk].
 
 ## Install
 
-    npm install git://github.com/chbrown/mturk.git
+    npm install git://github.com/chbrown/mechturk.git
 
 Or merge the following into your `package.json`:
 
     {
       "dependencies": {
-        "mturk": "git://github.com/chbrown/mturk.git"
+        "mechturk": "git://github.com/chbrown/mechturk.git"
       }
     }
 
@@ -64,7 +64,7 @@ Listen to events: assignmentAccepted, assignmentAbandoned, assignmentReturned, a
         accessKeyId: "YOUR_ACCESS_KEY_ID",
         secretAccessKey: "YOUR_SECRET_KEY"
     };
-    var mturk = require('mturk')(config);
+    var mechturk = require('mechturk')(config);
 
 - **url**: The base URL for all API calls.  Should be either
   - https://mechanicalturk.sandbox.amazonaws.com
@@ -82,7 +82,7 @@ For more information about the MT API, check out the [Developer Guide](http://do
 
 ## HITType
 
-    var HITType = require('mturk').HITType;
+    var HITType = require('mechturk').HITType;
 
 ### HITType.create(title, description, reward, assignmentDurationInSeconds, options, callback)
 

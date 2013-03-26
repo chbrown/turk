@@ -1,11 +1,11 @@
 {
-  "name": "mturk",
+  "name": "mechturk",
   "description": "Amazon Mechanical Turk API wrapper for Node",
   "version": "0.4.2a",
   "author": "Pedro Teixeira",
   "repository": {
     "type": "git",
-    "url": "http://github.com/chbrown/mturk.git"
+    "url": "http://github.com/chbrown/mechturk.git"
   },
   "contributors": [{
       "name": "Pedro Teixeira",
