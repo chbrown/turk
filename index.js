@@ -1,10 +1,12 @@
 var EventEmitter = require('events').EventEmitter;
-module.exports = function (conf) {
-  var notificationReceptor = require('./notification_receptor')(conf);
-  var HIT = require('./model/hit')(conf);
+var operations = require('./lib/operations');
+
+module.exports = function (config) {
+  var notificationReceptor = require('./notification_receptor')(config);
+  var HIT = require('./model/hit')(config);
   // var uri = require('./lib/uri');
 
-  var POLLER_INTERVAL_MS = conf.poller && conf.poller.frequency_ms || 60000;
+  var POLLER_INTERVAL_MS = config.poller && config.poller.frequency_ms || 60000;
 
   var notification = new EventEmitter();
   var ret = notification;
@@ -99,10 +101,25 @@ module.exports = function (conf) {
   };
 
   ret.HIT = HIT;
-  ret.HITType = require('./model/hit_type')(conf);
-  ret.Notification = require('./model/notification')(conf);
-  ret.Assignment = require('./model/assignment')(conf);
-  ret.doOperation = require('./lib/operations')(conf);
+  ret.HITType = require('./model/hit_type')(config);
+  ret.Notification = require('./model/notification')(config);
+  ret.Assignment = require('./model/assignment')(config);
+
+  var opWrapper = function(op_name) {
+    // callback signature: (err, result)
+    // every option must be submitted with the field "Operation" = <whatever the name of the operation is, a string>
+    return function(params, callback) {
+      var op = __.extend({name: op_name}, params);
+      helpers.postAMT(op, config, function (err, response) {
+        // new helpers.Checker().check(operation, 'Operation not found').notNull().callback(function(errors) {
+        if (err) return callback(err);
+        callback(null, response);
+      });
+    };
+  };
+  for (var op_name in operations) {
+    ret[op_name] = opWrapper(op_name);
+  }
 
   return ret;
 };
