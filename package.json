@@ -1,7 +1,7 @@
 {
   "name": "mechturk",
   "description": "Amazon Mechanical Turk API wrapper for Node",
-  "version": "0.4.2a",
+  "version": "0.4.3a",
   "author": "Pedro Teixeira",
   "repository": {
     "type": "git",
