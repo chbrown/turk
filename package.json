@@ -1,20 +1,23 @@
 {
   "name": "mechturk",
   "description": "Amazon Mechanical Turk API wrapper for Node",
-  "version": "0.4.3a",
-  "author": "Pedro Teixeira",
+  "version": "0.4.4",
+  "author": "Christopher Brown",
   "repository": {
     "type": "git",
     "url": "http://github.com/chbrown/mechturk.git"
   },
-  "contributors": [{
-      "name": "Pedro Teixeira",
-      "email": "pedro.teixeira@gmail.com"
-    }, {
-      "name": "Micah Silverman"
-    }, {
+  "contributors": [
+    {
       "name": "Christopher Brown",
       "email": "io@henrian.com"
+    },
+    {
+      "name": "Pedro Teixeira",
+      "email": "pedro.teixeira@gmail.com"
+    },
+    {
+      "name": "Micah Silverman"
     }
   ],
   "dependencies": {
