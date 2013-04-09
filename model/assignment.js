@@ -1,8 +1,9 @@
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
+var helpers = require('../lib/helpers');
+var operations = require('../lib/operations');
 
 module.exports = function (config) {
-  var operations = require('../lib/operations')(config);
   var Base = require('./base');
 
   function Assignment(id) {
@@ -37,8 +38,8 @@ module.exports = function (config) {
    *
    */
   Assignment.prototype.approve = function (requesterFeedback, callback) {
-    var fields = {AssignmentId: this.id, RequesterFeedback: requesterFeedback};
-    operations('ApproveAssignment', fields, callback);
+    var params = {AssignmentId: this.id, RequesterFeedback: requesterFeedback};
+    operations.post('ApproveAssignment', params, config, callback);
   };
 
   /**
@@ -50,8 +51,8 @@ module.exports = function (config) {
   *
   */
   Assignment.prototype.reject = function (requesterFeedback, callback) {
-    var fields = {AssignmentId: this.id, RequesterFeedback: requesterFeedback};
-    operations('RejectAssignment', fields, callback);
+    var params = {AssignmentId: this.id, RequesterFeedback: requesterFeedback};
+    operations.post('RejectAssignment', params, config, callback);
   };
 
 
@@ -65,7 +66,7 @@ module.exports = function (config) {
   *
   */
   Assignment.prototype.grantBonus = function (workerId, bonusAmount, reason, callback) {
-    var fields = {
+    var params = {
       AssignmentId: this.id,
       WorkerId: workerId,
       // BonusAmount actually needs to be a special Price data structure, but
@@ -74,7 +75,7 @@ module.exports = function (config) {
       BonusAmount: {CurrencyCode: 'USD', Amount: bonusAmount},
       Reason: reason
     };
-    operations('GrantBonus', fields, callback);
+    operations.post('GrantBonus', params, config, callback);
   };
 
   return Assignment;

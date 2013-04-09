@@ -109,15 +109,15 @@ module.exports = function (config) {
     // callback signature: (err, result)
     // every option must be submitted with the field "Operation" = <whatever the name of the operation is, a string>
     return function(params, callback) {
-      var op = __.extend({name: op_name}, params);
-      helpers.postAMT(op, config, function (err, response) {
+      operations.post(op_name, params, config, function (err, response) {
         // new helpers.Checker().check(operation, 'Operation not found').notNull().callback(function(errors) {
+        // don't check for now, so this is basically a pass-through
         if (err) return callback(err);
         callback(null, response);
       });
     };
   };
-  for (var op_name in operations) {
+  for (var op_name in operations.operations) {
     ret[op_name] = opWrapper(op_name);
   }
 
