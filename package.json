@@ -1,7 +1,7 @@
 {
   "name": "mechturk",
   "description": "Amazon Mechanical Turk API wrapper for Node",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "author": "Christopher Brown",
   "repository": {
     "type": "git",
