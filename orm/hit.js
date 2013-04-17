@@ -1,7 +1,6 @@
 var util = require('util');
 
 module.exports = function (config) {
-  // var request = require('../lib/request')(config);
   var Base = require('./base');
   var Assignment = require('./assignment')(config);
   var ret = {};

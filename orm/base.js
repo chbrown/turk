@@ -1,4 +1,4 @@
-// var __ = require('underscore');
+'use strict'; /*jslint nomen: true, es5: true, node: true */
 var Validator = require('validator').Validator;
 
 var Base = module.exports = function () {};
@@ -68,7 +68,6 @@ Base.prototype.nodeExists = function (spec, node) {
 };
 
 Base.prototype.remoteRequestValidationError = function (resultNode) {
-
   if (!this.nodeExists(['Request', 'IsValid'], resultNode)) return 'No "Request > IsValid" node on response';
 
   if (resultNode.Request.IsValid.toLowerCase() != 'true') {
@@ -80,5 +79,4 @@ Base.prototype.remoteRequestValidationError = function (resultNode) {
     });
     return errors;
   }
-
 };

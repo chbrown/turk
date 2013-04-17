@@ -1,19 +1,7 @@
 'use strict'; /*jslint nomen: true, es5: true, node: true */
-var xml_mapping = require('xml-mapping');
 var check = require('validator').check;
-var helpers = require('./helpers');
-var request = require('request');
-var url = require('url');
 var __ = require('underscore');
-
-function Price(amount) {
-  this.Amount = amount;
-}
-Price.prototype.toJSON = function() {
-  return {Amount: this.Amount, CurrencyCode: 'USD'};
-};
-
-function QualificationRequirement() { }
+var models = require('./models');
 
 var shared_Judgment_schema = {
   AssignmentId: {
@@ -173,7 +161,7 @@ ops.CreateHIT = {
       maxlen: 2000,
     },
     Reward: {
-      type: Price,
+      type: models.Price,
       required: true,
     },
     AssignmentDurationInSeconds: {
@@ -195,7 +183,7 @@ ops.CreateHIT = {
       max: 2592000
     },
     QualificationRequirement: {
-      type: QualificationRequirement,
+      type: models.QualificationRequirement,
       required: true,
     },
   }, shared_CreateHIT_schema)],
@@ -484,7 +472,7 @@ ops.GrantBonus = {
       required: true
     },
     BonusAmount: {
-      type: Price,
+      type: models.Price,
       required: true
     },
     Reason: {
@@ -630,56 +618,3 @@ ops.UpdateQualificationType = {
 };
 
 exports.operations = ops;
-
-function APIError(code, message) {
-  this.code = code;
-  this.message = message;
-}
-APIError.prototype.toString = function() {
-  return this.code + ': ' + this.message;
-};
-
-/**
- * Request an operation to Mechanical Turk using the AWS RESTful API
- *
- * @param {Object} params An object containing the operation arguments and name.
- * @param {Function} callback A function with the signature: (error, response)
- *
- */
-exports.post = function (op_name, extra_params, config, callback) {
-  var params = __.extend({
-    Service: 'AWSMechanicalTurkRequester',
-    Operation: op_name,
-    Version: '2008-08-02',
-    AWSAccessKeyId: config.accessKeyId,
-    Timestamp: new Date().toISOString(),
-  }, extra_params);
-  params.Signature = helpers.sign(config.secretAccessKey, params.Service, params.Operation, params.Timestamp);
-
-  request.post({form: helpers.awsSerialize(params), url: config.url}, function(err, response, xml) {
-    // request might return an error
-    if (err)
-      return callback(err);
-    // AMT API might return an error
-    var json = helpers.xml2json(xml);
-    var result_data = json[op_name + 'Response'][op_name + 'Result'];
-    if (result_data.Request.IsValid.toLowerCase() !== 'true') {
-      var error_data = result_data.Request.Errors.Error;
-      return callback(new APIError(error_data.Code, error_data.Message));
-    }
-    callback(err, result_data);
-  });
-};
-
-exports.getAMT = function (extra_params, config, callback) {
-  // ...
-  throw new Error('This method is not yet implemented.');
-
-  var urlObj = url.parse();
-  urlObj.query = helpers.awsSerialize(extra_params);
-  url.format(urlObj);
-  // ...
-
-  request.get({});
-};
-
