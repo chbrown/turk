@@ -92,6 +92,7 @@ module.exports = function(config) {
   return mechturk;
 };
 
-exports.operations = operations;
-exports.models = models;
-exports.xml2json = helpers.xml2json;
+// apparently the module. bit is required
+module.exports.operations = operations;
+module.exports.models = models;
+module.exports.xml2json = helpers.xml2json;
