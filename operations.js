@@ -43,12 +43,12 @@ ops.AssignQualification = {
     IntegerValue: {
       type: Number,
       required: false,
-      default: 1
+      'default': 1
     },
     SendNotification: {
       type: Boolean,
       required: true,
-      default: true
+      'default': true
     },
   },
   validateResponse: function(response) {
@@ -135,7 +135,7 @@ var shared_CreateHIT_schema = __.extend({
   MaxAssignments: {
     type: Number,
     required: false,
-    default: 1,
+    'default': 1,
     min: 1,
     max: 1000000000
   },
@@ -178,7 +178,7 @@ ops.CreateHIT = {
     AutoApprovalDelayInSeconds: {
       type: String,
       required: false,
-      default: 2592000,
+      'default': 2592000,
       min: 0,
       max: 2592000
     },
@@ -272,14 +272,14 @@ var shared_Page_schema = {
   PageSize: {
     type: Number,
     required: false,
-    default: 10,
+    'default': 10,
     min: 1,
     max: 100
   },
   PageNumber: {
     type: Number,
     required: false,
-    default: 1,
+    'default': 1,
     min: 1,
   },
 };
@@ -298,7 +298,7 @@ ops.GetAssignmentsForHIT = {
     SortDirection: {
       type: String,
       required: false,
-      default: 'Ascending',
+      'default': 'Ascending',
       options: ['Ascending', 'Descending']
     },
   }, shared_Page_schema, shared_HIT_schema),
@@ -387,7 +387,7 @@ ops.GetQualificationsForQualificationType = {
     Status: {
       type: String,
       required: false,
-      default: 'Granted',
+      'default': 'Granted',
       options: ['Granted', 'Revoked']
     },
   }, shared_Page_schema),
@@ -431,19 +431,19 @@ ops.GetReviewableHITs = {
       // To query both Reviewable and Reviewing HITs, specify multiple Status parameters.
       type: String,
       required: false,
-      default: 'Reviewable',
+      'default': 'Reviewable',
       options: ['Reviewable', 'Reviewing'],
     },
     SortProperty: {
       type: String,
       required: false,
-      default: 'Expiration',
+      'default': 'Expiration',
       options: ['Title', 'Reward', 'Expiration', 'CreationTime', 'Enumeration'],
     },
     SortDirection: {
       type: String,
       required: false,
-      default: 'Ascending',
+      'default': 'Ascending',
       options: ['Ascending', 'Descending']
     },
   }, shared_Page_schema),
@@ -546,13 +546,13 @@ ops.SearchHITs = {
     SortProperty: {
       type: String,
       required: false,
-      default: 'CreationTime',
+      'default': 'CreationTime',
       options: ['Title', 'Reward', 'Expiration', 'CreationTime', 'Enumeration']
     },
     SortDirection: {
       type: String,
       required: false,
-      default: 'Ascending',
+      'default': 'Ascending',
       options: ['Ascending', 'Descending']
     },
   }, shared_Page_schema),
