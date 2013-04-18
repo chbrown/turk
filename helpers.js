@@ -99,7 +99,19 @@ function node2json(nodes) {
   else {
     value = {};
     elements.forEach(function(node) {
-      value[node.name()] = node2json(node.childNodes());
+      var tag = node.name();
+      var existing = value[tag];
+      var child = node2json(node.childNodes());
+      if (existing) {
+        if (!__.isArray(existing)) {
+          existing = [existing];
+        }
+        existing.push(child);
+      }
+      else {
+        existing = child;
+      }
+      value[tag] = existing;
     });
   }
   return value;

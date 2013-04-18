@@ -38,6 +38,7 @@ function post(op_name, extra_params, config, callback) {
     if (err) {
       return callback(err);
     }
+    config.logger.debug('Response: ' + xml);
     // AMT API might return an error
     var json = helpers.xml2json(xml);
     var json_response = json[op_name + 'Response'];
@@ -91,5 +92,6 @@ module.exports = function(config) {
   return mechturk;
 };
 
-module.exports.operations = operations;
-module.exports.models = models;
+exports.operations = operations;
+exports.models = models;
+exports.xml2json = helpers.xml2json;
