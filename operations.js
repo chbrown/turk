@@ -1,6 +1,6 @@
 'use strict'; /*jslint nomen: true, es5: true, node: true */
+var _ = require('underscore');
 var check = require('validator').check;
-var __ = require('underscore');
 var models = require('./models');
 
 var shared_Judgment_schema = {
@@ -97,7 +97,7 @@ var shared_Unique_schema = {
   }
 };
 
-var shared_CreateHIT_schema = __.extend({
+var shared_CreateHIT_schema = _.extend({
   Question: {
     // Constraints: Must be a QuestionForm data structure, an ExternalQuestion data structure, or an HTMLQuestion data structure. The XML question data must not be larger than 64 kilobytes (65,535 bytes) in size, including whitespace.
     // Either a Question parameter or a HITLayoutId parameter must be provided.
@@ -144,12 +144,12 @@ var shared_CreateHIT_schema = __.extend({
 ops.CreateHIT = {
   // when there are multiple schemas, either one can apply
   schemas: [
-  __.extend({
+  _.extend({
     HITTypeId: {
       type: String,
       required: true
     },
-  }, shared_CreateHIT_schema), __.extend({
+  }, shared_CreateHIT_schema), _.extend({
     Title: {
       type: String,
       required: true,
@@ -285,7 +285,7 @@ var shared_Page_schema = {
 };
 
 ops.GetAssignmentsForHIT = {
-  schema: __.extend({
+  schema: _.extend({
     AssignmentStatus: {
 
     },
@@ -350,7 +350,7 @@ ops.GetHIT = {
 
 
 ops.GetHITsForQualificationType = {
-  schema: __.extend({
+  schema: _.extend({
     QualificationTypeId: {
       type: String,
       required: true
@@ -379,7 +379,7 @@ ops.GetQualificationScore = {
 
 
 ops.GetQualificationsForQualificationType = {
-  schema: __.extend({
+  schema: _.extend({
     QualificationTypeId: {
       type: String,
       required: true
@@ -422,7 +422,7 @@ ops.GetRequesterWorkerStatistic = {
 
 
 ops.GetReviewableHITs = {
-  schema: __.extend({
+  schema: _.extend({
     HITTypeId: {
       type: String,
       required: false
@@ -462,7 +462,7 @@ ops.GetReviewResultsForHIT = {
 
 
 ops.GrantBonus = {
-  schema: __.extend({
+  schema: _.extend({
     WorkerId: {
       type: String,
       required: true
@@ -542,7 +542,7 @@ ops.RevokeQualification = {
 
 
 ops.SearchHITs = {
-  schema: __.extend({
+  schema: _.extend({
     SortProperty: {
       type: String,
       required: false,

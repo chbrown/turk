@@ -1,13 +1,12 @@
-'use strict'; /*jslint nomen: true, es5: true, node: true */
-var operations = require('./operations');
-var models = require('./models');
+'use strict'; /*jslint node: true, es5: true, indent: 2 */
+var _ = require('underscore');
 var errors = require('./errors');
-var xml_mapping = require('xml-mapping');
 var helpers = require('./helpers');
+var models = require('./models');
+var operations = require('./operations');
 var request = require('request');
 var url = require('url');
 var util = require('util');
-var __ = require('underscore');
 
 /**
  * Request an operation to Mechanical Turk using the AWS RESTful API
@@ -17,7 +16,7 @@ var __ = require('underscore');
  *
  */
 function post(op_name, extra_params, config, callback) {
-  var params = __.extend({
+  var params = _.extend({
     Service: 'AWSMechanicalTurkRequester',
     Operation: op_name,
     Version: '2008-08-02',
@@ -53,7 +52,7 @@ function post(op_name, extra_params, config, callback) {
   });
 }
 
-function get(extra_params, config, callback) {
+function get(op_name, extra_params, config, callback) {
   // ...
   throw new Error('This method is not yet implemented.');
 

@@ -1,4 +1,6 @@
 'use strict'; /*jslint nomen: true, es5: true, node: true */
+var xmlns = 'http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2006-07-14/ExternalQuestion.xsd';
+
 var Price = exports.Price = function(amount) {
   this.Amount = amount;
 };
@@ -6,17 +8,17 @@ Price.prototype.toJSON = function() {
   return {Amount: this.Amount, CurrencyCode: 'USD'};
 };
 
-var ExternalQuestion = exports.ExternalQuestion = function(external_url, frame_height) {
-  this.external_url = external_url;
-  this.frame_height = frame_height;
+var ExternalQuestion = exports.ExternalQuestion = function(ExternalURL, FrameHeight) {
+  this.ExternalURL = ExternalURL;
+  this.FrameHeight = FrameHeight;
 };
 ExternalQuestion.prototype.toJSON = function() {
-  return {ExternalURL: this.external_url, FrameHeight: this.frame_height};
+  return {ExternalURL: this.ExternalURL, FrameHeight: this.FrameHeight};
 };
 ExternalQuestion.prototype.toXML = function() {
-  var xmlns = 'http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2006-07-14/ExternalQuestion.xsd';
-  return '<ExternalQuestion xmlns="' + xmlns + '"><ExternalURL>' + this.external_url + '</ExternalURL>' +
-    '<FrameHeight>' + this.frame_height + '</FrameHeight></ExternalQuestion>';
+  return '<ExternalQuestion xmlns="' + xmlns + '"><ExternalURL>' + this.ExternalURL + '</ExternalURL>' +
+    '<FrameHeight>' + this.FrameHeight + '</FrameHeight></ExternalQuestion>';
 };
 
-function QualificationRequirement() { }
+var QualificationRequirement = exports.QualificationRequirement = function() {
+};

@@ -1,4 +1,4 @@
-'use strict'; /*jslint nomen: true, es5: true, node: true */
+'use strict'; /*jslint node: true, es5: true, indent: 2 */
 var crypto = require('crypto');
 var util = require('util');
 var validator = require('validator');

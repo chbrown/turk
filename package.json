@@ -1,40 +1,29 @@
 {
   "name": "mechturk",
-  "description": "Amazon Mechanical Turk API wrapper for Node",
+  "description": "Amazon Mechanical Turk API",
   "version": "0.4.6",
-  "author": "Christopher Brown",
+  "author": "Christopher Brown <io@henrian.com> (http://henrian.com)",
+  "keywords": ["mechanical", "turk", "amazon", "aws", "api"],
   "repository": {
     "type": "git",
-    "url": "http://github.com/chbrown/mechturk.git"
+    "url": "git://github.com/chbrown/mechturk.git"
   },
   "contributors": [
-    {
-      "name": "Christopher Brown",
-      "email": "io@henrian.com"
-    },
-    {
-      "name": "Pedro Teixeira",
-      "email": "pedro.teixeira@gmail.com"
-    },
-    {
-      "name": "Micah Silverman"
-    }
+    "Christopher Brown <io@henrian.com>",
+    "Pedro Teixeira <pedro.teixeira@gmail.com>",
+    "Micah Silverman"
   ],
   "dependencies": {
-    "request": "*",
-    "validator": "*",
-    "express": "*",
-    "winston": "*",
-    "underscore": "*",
     "libxmljs": "*",
-    "xml-mapping": "*",
-    "underscore": "*"
+    "request": "*",
+    "underscore": "*",
+    "winston": "*",
   },
   "devDependencies": {
-    "nock": "*"
+    "nock": "*",
+    "tap": "*"
   },
   "scripts": {
-    "test": "make"
-  },
-  "tags": ["Mechanical Turk", "Amazon", "API"]
+    "test": "tap test"
+  }
 }

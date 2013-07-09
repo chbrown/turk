@@ -1,4 +1,5 @@
-'use strict'; /*jslint nomen: true, es5: true, node: true */
+'use strict'; /*jslint node: true, es5: true, indent: 2 */
+
 var APIError = exports.APIError = function(code, message) {
   this.code = code;
   this.message = message;
