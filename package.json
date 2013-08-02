@@ -18,6 +18,7 @@
     "request": "*",
     "underscore": "*",
     "winston": "*",
+    "xmlconv": "*"
   },
   "devDependencies": {
     "nock": "*",

@@ -7,6 +7,7 @@ var operations = require('./operations');
 var request = require('request');
 var url = require('url');
 var util = require('util');
+var xmlconv = require('xmlconv');
 
 /**
  * Request an operation to Mechanical Turk using the AWS RESTful API
@@ -39,7 +40,7 @@ function post(op_name, extra_params, config, callback) {
     }
     config.logger.debug('Response: ' + xml);
     // AMT API might return an error
-    var json = helpers.xml2json(xml);
+    var json = xmlconv(xml, {convention: 'castle'});
     var json_response = json[op_name + 'Response'];
     var json_result = json_response[op_name + 'Result'];
     // console.dir(JSON.stringify(json_response));
@@ -64,7 +65,7 @@ function get(op_name, extra_params, config, callback) {
   request.get({});
 }
 
-module.exports = function(config) {
+var requestFactory = module.exports = function(config) {
   var mechturk = {};
   // ret.HITType = require('./model/hit_type')(config);
   // ret.Notification = require('./model/notification')(config);
@@ -91,7 +92,5 @@ module.exports = function(config) {
   return mechturk;
 };
 
-// apparently the module. bit is required
-module.exports.operations = operations;
-module.exports.models = models;
-module.exports.xml2json = helpers.xml2json;
+requestFactory.operations = operations;
+requestFactory.models = models;
