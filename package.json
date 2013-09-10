@@ -1,7 +1,7 @@
 {
   "name": "turk",
   "description": "Amazon Mechanical Turk API - more coverage, less ORM",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "author": "Christopher Brown <io@henrian.com> (http://henrian.com)",
   "keywords": [
     "mechanical",
