@@ -1,48 +1,63 @@
-'use strict'; /*jslint node: true, es5: true, indent: 2 */
-var _ = require('underscore');
-var errors = require('./errors');
-var helpers = require('./helpers');
-var models = require('./models');
-var operations = require('./operations');
-var request = require('request');
+'use strict'; /*jslint es5: true, node: true, indent: 2 */
 var url = require('url');
 var util = require('util');
+
+var _ = require('underscore');
+var request = require('request');
+var winston = require('winston');
 var xmlconv = require('xmlconv');
 
-/**
- * Request an operation to Mechanical Turk using the AWS RESTful API
- *
- * @param {Object} params An object containing the operation arguments and name.
- * @param {Function} callback A function with the signature: (error, response)
- *
- */
-function post(op_name, extra_params, config, callback) {
-  var params = _.extend({
+var errors = require('./lib/errors');
+var misc = require('./lib/misc');
+var models = require('./lib/models');
+var operations = require('./lib/operations');
+
+var Connection = exports.Connection = function(accessKeyId, secretAccessKey, opts) {
+  this.accessKeyId = accessKeyId;
+  this.secretAccessKey = secretAccessKey;
+  this.url = opts.url || 'https://mechanicalturk.amazonaws.com';
+  this.logger = opts.logger || new winston.Logger();
+};
+Object.keys(operations).forEach(function(operation_name) {
+  Connection.prototype[operation_name] = function(params, callback) {
+    this.post(operation_name, params, callback);
+  };
+});
+
+Connection.prototype.post = function(operation, params, callback) {
+  /** Post a request to Mechanical Turk using the AWS RESTful API
+
+  operation: String
+      The name of the operation
+  params: Object
+      An object containing the operation arguments and name.
+  callback: function(Error | null, Object | null)
+      Callback function for when we receive a response after we parse the returned XML.
+  */
+  var self = this;
+  // every option must be submitted with the field "Operation" = <whatever the name of the operation is, a string>
+  params = _.extend({
     Service: 'AWSMechanicalTurkRequester',
-    Operation: op_name,
+    Operation: operation,
     Version: '2008-08-02',
-    AWSAccessKeyId: config.accessKeyId,
+    AWSAccessKeyId: this.accessKeyId,
     Timestamp: new Date().toISOString(),
-  }, extra_params);
-  params.Signature = helpers.sign(config.secretAccessKey,
-    params.Service, params.Operation, params.Timestamp);
+  }, params);
 
-  var form = helpers.awsSerialize(params);
-  if (config.logger) {
-    var form_inspect = util.inspect(form, {depth: null});
-    config.logger.debug('POSTing ' + op_name + ': ' + form_inspect);
-  }
+  params.Signature = misc.sign(this.secretAccessKey, params.Service, params.Operation, params.Timestamp);
 
-  request.post({form: form, url: config.url}, function(err, response, xml) {
+  var form = misc.awsSerialize(params);
+  this.logger.debug('POST %s', operation, form);
+
+  request.post({form: form, url: this.url}, function(err, response, xml) {
     // request might return an error
-    if (err) {
-      return callback(err);
-    }
-    config.logger.debug('Response: ' + xml);
+    if (err) return callback(err);
+
+    self.logger.debug('Response: ' + xml);
     // AMT API might return an error
     var json = xmlconv(xml, {convention: 'castle'});
-    var json_response = json[op_name + 'Response'];
-    var json_result = json_response[op_name + 'Result'];
+    var json_response = json[operation + 'Response'];
+    var json_result = json_response[operation + 'Result'];
     // console.dir(JSON.stringify(json_response));
     // console.dir(json_result);
     if (json_result && json_result.Request.IsValid.toLowerCase() !== 'true') {
@@ -51,46 +66,16 @@ function post(op_name, extra_params, config, callback) {
     }
     callback(err, json_response);
   });
-}
-
-function get(op_name, extra_params, config, callback) {
-  // ...
-  throw new Error('This method is not yet implemented.');
-
-  var urlObj = url.parse();
-  urlObj.query = helpers.awsSerialize(extra_params);
-  url.format(urlObj);
-  // ...
-
-  request.get({});
-}
-
-var requestFactory = module.exports = function(config) {
-  var mechturk = {};
-  // ret.HITType = require('./model/hit_type')(config);
-  // ret.Notification = require('./model/notification')(config);
-  // ret.Assignment = require('./model/assignment')(config);
-
-  var opWrapper = function(op_name) {
-    // basically a closure to wrap in the config
-    // callback signature: (err, result)
-    // every option must be submitted with the field "Operation" = <whatever the name of the operation is, a string>
-    return function(params, callback) {
-      post(op_name, params, config, function (err, response) {
-        // new helpers.Checker().check(operation, 'Operation not found').notNull().callback(function(errors) {
-        // don't check for now, so this is basically a pass-through
-        if (err) return callback(err);
-        callback(null, response);
-      });
-    };
-  };
-
-  for (var op_name in operations.operations) {
-    mechturk[op_name] = opWrapper(op_name);
-  }
-
-  return mechturk;
 };
 
-requestFactory.operations = operations;
-requestFactory.models = models;
+Connection.prototype.get = function(operation, params, callback) {
+  throw new Error('This method is not yet implemented.');
+  // var urlObj = url.parse();
+  // urlObj.query = misc.awsSerialize(extra_params);
+  // url.format(urlObj);
+  // ...
+  // request.get({});
+};
+
+Connection.operations = operations;
+Connection.models = models;

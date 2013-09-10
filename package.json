@@ -14,7 +14,6 @@
     "Micah Silverman"
   ],
   "dependencies": {
-    "libxmljs": "*",
     "request": "*",
     "underscore": "*",
     "winston": "*",
