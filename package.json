@@ -1,6 +1,6 @@
 {
-  "name": "mechturk",
-  "description": "Amazon Mechanical Turk API",
+  "name": "turk",
+  "description": "Amazon Mechanical Turk API - more coverage, less ORM",
   "version": "0.5.0",
   "author": "Christopher Brown <io@henrian.com> (http://henrian.com)",
   "keywords": [
@@ -12,7 +12,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/chbrown/mechturk.git"
+    "url": "git://github.com/chbrown/turk.git"
   },
   "contributors": [
     "Christopher Brown <io@henrian.com>",
@@ -26,7 +26,6 @@
     "xmlconv": "*"
   },
   "devDependencies": {
-    "nock": "*",
     "tap": "*"
   },
   "scripts": {
