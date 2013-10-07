@@ -9,7 +9,7 @@ var xmlconv = require('xmlconv');
 
 var errors = require('./lib/errors');
 var misc = require('./lib/misc');
-var models = require('./lib/models');
+var models = exports.models = require('./lib/models');
 var operations = require('./lib/operations');
 
 var Connection = exports.Connection = function(accessKeyId, secretAccessKey, opts) {
