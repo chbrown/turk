@@ -20,9 +20,9 @@
     "Micah Silverman"
   ],
   "dependencies": {
+    "loge": "*",
     "request": "*",
     "underscore": "*",
-    "winston": "*",
     "xmlconv": "*"
   },
   "devDependencies": {

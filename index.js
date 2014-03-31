@@ -4,7 +4,7 @@ var util = require('util');
 
 var _ = require('underscore');
 var request = require('request');
-var winston = require('winston');
+var logger = require('loge');
 var xmlconv = require('xmlconv');
 
 var errors = require('./lib/errors');
@@ -16,7 +16,7 @@ var Connection = exports.Connection = function(accessKeyId, secretAccessKey, opt
   this.accessKeyId = accessKeyId;
   this.secretAccessKey = secretAccessKey;
   this.url = opts.url || 'https://mechanicalturk.amazonaws.com';
-  this.logger = opts.logger || new winston.Logger();
+  this.logger = opts.logger || logger;
 };
 Object.keys(operations).forEach(function(operation_name) {
   Connection.prototype[operation_name] = function(params, callback) {
