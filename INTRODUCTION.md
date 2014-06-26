@@ -6,7 +6,7 @@ Basic terminology:
 
 - **AMT**: Amazon Mechanical Turk
 - **Requester**: you, the experimenter
-- **HIT**: the **H**uman **I**ntelligence **T**ask of your creation. Technically, this refers to a small static part of a larger job (a **HIT Type**), but is colloquially used to refer all types of jobs / experiments / tasks on AMT.
+- **HIT**: the <b>H</b>uman <b>I</b>ntelligence <b>T</b>ask of your creation. Technically, this refers to a small static part of a larger job (a **HIT Type**), but is colloquially used to refer all types of jobs / experiments / tasks on AMT.
 - **Turker** or **Worker**: the subject of your experiment or task, optimally a real person
 - **Sandbox**: the AMT staging area.
   No one pays or gets paid to work on sandbox HITs; the sandbox exists solely to test out the HITs you've created before you submit them to the production site.
