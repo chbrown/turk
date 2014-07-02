@@ -91,7 +91,7 @@ Some things that are kind of tricky to do on the web right now, like audio/video
 
 - Panos Ipeirotis has a great blog of his MTurk forays (and other things) at [behind-the-enemy-lines.com](http://www.behind-the-enemy-lines.com/)
 - Perhaps the best known paper on using MTurk in NLP ["Cheap and Fast - But is it Good? Evaluating Non-Expert Annotations for Natural Language Tasks"](http://www.stanford.edu/people/jurafsky/amt.pdf) (Spoiler: yes. Well, good enough.)
-- ["Fast, Cheap, and Creative: Evaluating Translation Quality Using Amazon's Mechanical Turk"]() includes a nice exposition of MTurk, comparisons of Turkers to experts, and how to use both effectively.
+- ["Fast, Cheap, and Creative: Evaluating Translation Quality Using Amazon's Mechanical Turk"](https://www.cs.jhu.edu/~ccb/publications/mechanical-turk-for-machine-translation-evaluation.pdf) includes a nice exposition of MTurk, comparisons of Turkers to experts, and how to use both effectively.
 - One of my favorite uses of MTurk: [10,000 hand-drawn sheep](http://www.thesheepmarket.com/) (Total Cost: $250)
 - And of course the "wisdom of crowds" [Francis Galton paper](http://galton.org/essays/1900-1911/galton-1907-vox-populi.pdf) from 1907 that kicked it all off (back in the day when groundbreaking scientific articles were one page).
 
