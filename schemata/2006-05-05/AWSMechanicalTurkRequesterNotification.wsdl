@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="http://requester.mturk.amazonaws.com/doc/2006-05-05"
+    targetNamespace="http://requester.mturk.amazonaws.com/doc/2006-05-05">
+
+    <types>
+	<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	    targetNamespace="http://requester.mturk.amazonaws.com/doc/2006-05-05"
+	    xmlns:tns="http://requester.mturk.amazonaws.com/doc/2006-05-05"
+	    elementFormDefault="qualified">
+	
+	    <xs:simpleType name="EventType">
+	        <xs:restriction base="xs:string">
+	            <xs:enumeration value="AssignmentAccepted" />
+	            <xs:enumeration value="AssignmentAbandoned" />
+	            <xs:enumeration value="AssignmentReturned" />
+	            <xs:enumeration value="AssignmentSubmitted" />
+	            <xs:enumeration value="HITReviewable" />
+	            <xs:enumeration value="HITExpired" />
+	            <xs:enumeration value="Ping" />
+	        </xs:restriction>
+	    </xs:simpleType>
+	
+	    <xs:complexType name="Event">
+	        <xs:sequence>
+	            <xs:element name="EventType" type="tns:EventType" />
+	            <xs:element name="EventTime" type="xs:dateTime" />
+	            <xs:element name="HITTypeId" type="xs:string"
+	                minOccurs="0" />
+	            <xs:element name="HITId" type="xs:string"
+	                minOccurs="0" />
+	            <xs:element name="AssignmentId" type="xs:string"
+	                minOccurs="0" />
+	        </xs:sequence>
+	    </xs:complexType>
+	
+	    <xs:element name="Notify">
+	        <xs:complexType>
+	            <xs:sequence>
+	                <xs:element name="Signature" type="xs:string" />
+	                <xs:element name="Timestamp" type="xs:dateTime" />
+	                <xs:element name="Version" type="xs:string" />
+	                <xs:element name="Event" type="tns:Event"
+	                    maxOccurs="unbounded" />
+	            </xs:sequence>
+	        </xs:complexType>
+	    </xs:element>
+	
+	    <xs:element name="NotifyResult">
+	        <xs:complexType>
+	            <xs:sequence>
+	                <xs:element name="Success" type="xs:boolean"
+	                    minOccurs="0" />
+	            </xs:sequence>
+	        </xs:complexType>
+	    </xs:element>
+	
+	</xs:schema>
+    </types>
+
+    <message name="NotifyMsg">
+        <part name="body" element="tns:Notify" />
+    </message>
+    <message name="NotifyResultMsg">
+        <part name="body" element="tns:NotifyResult" />
+    </message>
+
+    <portType name="AWSMechanicalTurkRequesterNotificationPortType">
+        <operation name="Notify">
+            <input message="tns:NotifyMsg" />
+            <output message="tns:NotifyResultMsg" />
+        </operation>
+    </portType>
+
+    <binding name="AWSMechanicalTurkRequesterNotificationBinding"
+        type="tns:AWSMechanicalTurkRequesterNotificationPortType">
+        <soap:binding style="document"
+            transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="Notify">
+            <soap:operation soapAction="http://soap.amazon.com" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+        </operation>
+    </binding>
+
+    <service name="AWSMechanicalTurkRequesterNotification">
+        <port name="AWSMechanicalTurkRequesterNotificationPort"
+            binding="tns:AWSMechanicalTurkRequesterNotificationBinding">
+            <soap:address location="http://localhost/custom_url" />
+        </port>
+    </service>
+
+</definitions>
