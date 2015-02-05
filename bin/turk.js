@@ -21,6 +21,7 @@ var optimist = require('optimist')
     '',
     'examples:',
     '  turk Operation=SearchQualificationTypes',
+    '  turk Operation=SendTestEventNotification Notification.1.Destination=https://sqs.us-east-1.amazonaws.com/185747841350/turk_all Notification.1.Transport=SQS Notification.1.Version=2006-05-05 Notification.1.EventType=HITReviewable',
   ].join('\n'))
   .describe({
     help: 'print this help message',
@@ -44,7 +45,7 @@ else if (argv.help) {
   return optimist.showHelp();
 }
 else {
-  var params = parseParams(argv);
+  var params = parseParams(argv._);
   var connection = new turk.Connection(
     process.env.AWS_ACCESS_KEY_ID, process.env.AWS_SECRET_ACCESS_KEY, {logger: logger});
   connection.post(null, params, function(err, response) {

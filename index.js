@@ -35,7 +35,8 @@ Connection.prototype.post = function(operation, params, callback) {
       Callback function for when we receive a response after we parse the returned XML.
   */
   var self = this;
-  // every option must be submitted with the field "Operation" = <whatever the name of the operation is, a string>
+  // every option must be submitted with the field "Operation" =
+  //   <whatever the name of the operation is, a string>
   params = _.extend({
     Service: 'AWSMechanicalTurkRequester',
     Operation: operation,
