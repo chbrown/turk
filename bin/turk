@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-/*jslint node: true */
 var logger = require('loge');
 var turk = require('..');
 
@@ -12,7 +11,7 @@ var parseParams = function(args) {
   return params;
 };
 
-var optimist = require('optimist')
+var yargs = require('yargs')
   .usage([
     'Usage: turk <options>',
     '',
@@ -35,14 +34,14 @@ var optimist = require('optimist')
     Timestamp: new Date().toISOString(),
   });
 
-var argv = optimist.argv;
+var argv = yargs.argv;
 logger.level = argv.verbose ? 'debug' : 'info';
 
 if (argv.version) {
   console.log(require('../package').version);
 }
 else if (argv.help) {
-  return optimist.showHelp();
+  return yargs.showHelp();
 }
 else {
   var params = parseParams(argv._);

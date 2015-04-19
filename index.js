@@ -1,8 +1,7 @@
-'use strict'; /*jslint es5: true, node: true, indent: 2 */
 var url = require('url');
 var util = require('util');
 
-var _ = require('underscore');
+var _ = require('lodash');
 var request = require('request');
 var logger = require('loge');
 var xmlconv = require('xmlconv');

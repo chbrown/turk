@@ -1,8 +1,7 @@
 {
   "name": "turk",
-  "description": "Amazon Mechanical Turk API - more coverage, less ORM",
   "version": "0.5.3",
-  "author": "Christopher Brown <io@henrian.com> (http://henrian.com)",
+  "description": "Amazon Mechanical Turk API - more coverage, less ORM",
   "keywords": [
     "mechanical",
     "turk",
@@ -10,29 +9,28 @@
     "aws",
     "api"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/chbrown/turk.git"
-  },
+  "license": "MIT",
+  "repository": "git://github.com/chbrown/turk.git",
+  "author": "Christopher Brown <io@henrian.com> (http://henrian.com)",
   "contributors": [
     "Christopher Brown <io@henrian.com>",
     "Pedro Teixeira <pedro.teixeira@gmail.com>",
     "Micah Silverman"
   ],
   "dependencies": {
+    "htmlparser2": "*",
     "loge": "*",
-    "optimist": "*",
     "request": "*",
-    "underscore": "*",
-    "htmlparser2": "*"
+    "lodash": "*",
+    "yargs": "*"
   },
   "devDependencies": {
-    "tap": "*"
+    "mocha": "*"
   },
   "bin": {
-    "turk": "bin/turk.js"
+    "turk": "bin/turk"
   },
   "scripts": {
-    "test": "tap test"
+    "test": "mocha test"
   }
 }
