@@ -18,14 +18,13 @@
     "Micah Silverman"
   ],
   "dependencies": {
-    "htmlparser2": "*",
-    "loge": "*",
     "request": "*",
     "lodash": "*",
     "yargs": "*"
   },
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "*",
+    "typescript": "*"
   },
   "bin": {
     "turk": "bin/turk"
