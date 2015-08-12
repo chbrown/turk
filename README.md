@@ -41,4 +41,4 @@ The Event structure consists of the following properties:
 
 ## License
 
-Copyright 2013-2015 Christopher Brown. [MIT Licensed](http://opensource.org/licenses/MIT).
+Copyright 2013–2015 Christopher Brown. [MIT Licensed](http://chbrown.github.io/licenses/MIT/#2013-2015).
