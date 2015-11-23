@@ -1,10 +1,9 @@
-DT := form-data/form-data lodash/lodash mocha/mocha node/node request/request yargs/yargs
+BIN := node_modules/.bin
 
-all: $(DT:%=type_declarations/DefinitelyTyped/%.d.ts) index.js
+all: index.js
 
-%.js: %.ts
-	node_modules/.bin/tsc -m commonjs -t ES5 $+
+$(BIN)/tsc:
+	npm install
 
-type_declarations/DefinitelyTyped/%:
-	mkdir -p $(@D)
-	curl -s https://raw.githubusercontent.com/borisyankov/DefinitelyTyped/master/$* > $@
+%.js: %.ts $(BIN)/tsc
+	$(BIN)/tsc

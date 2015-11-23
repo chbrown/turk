@@ -1,7 +1,6 @@
-/// <reference path="type_declarations/index.d.ts" />
-import _ = require('lodash');
-import request = require('request');
-import crypto = require('crypto');
+import * as _ from 'lodash';
+import * as request from 'request';
+import * as crypto from 'crypto';
 
 type StringObject = {[index: string]: string};
 

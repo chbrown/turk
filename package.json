@@ -23,6 +23,7 @@
     "yargs": "*"
   },
   "devDependencies": {
+    "declarations": "*",
     "mocha": "*",
     "typescript": "*"
   },

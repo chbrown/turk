@@ -1,4 +1,3 @@
-/// <reference path="type_declarations/index.d.ts" />
 var _ = require('lodash');
 var request = require('request');
 var crypto = require('crypto');
