@@ -1,5 +1,7 @@
 # turk: Amazon Mechanical Turk API
 
+[![npm version](https://badge.fury.io/js/turk.svg)](https://www.npmjs.com/package/turk)
+
 See http://en.wikipedia.org/wiki/Web_Services_Description_Language
 In combination with http://docs.aws.amazon.com/AWSMechTurk/latest/AWSMturkAPI/ApiReference_WsdlLocationArticle.html
 
