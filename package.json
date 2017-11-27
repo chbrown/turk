@@ -18,14 +18,17 @@
     "Micah Silverman"
   ],
   "dependencies": {
-    "request": "*",
-    "lodash": "*",
-    "yargs": "*"
+    "optimist": "^0.6.1",
+    "lodash": "^3.10.1",
+    "request": "^2.83.0"
   },
   "devDependencies": {
-    "declarations": "*",
-    "mocha": "*",
-    "typescript": "*"
+    "mocha": "^2.5.3",
+    "@types/request": "^2.0.8",
+    "@types/lodash": "^3.10.2",
+    "@types/node": "latest",
+    "@types/optimist": "latest",
+    "typescript": "^2.6.1"
   },
   "bin": {
     "turk": "bin/turk"

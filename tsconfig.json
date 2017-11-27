@@ -4,10 +4,7 @@
     "target": "ES5"
   },
   "files": [
-    "node_modules/declarations/lodash/lodash.d.ts",
-    "node_modules/declarations/node/node.d.ts",
-    "node_modules/declarations/request/request.d.ts",
-    "node_modules/declarations/yargs/yargs.d.ts",
+    "bin/turk.ts",
     "index.ts"
   ]
 }
