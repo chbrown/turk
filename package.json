@@ -31,7 +31,7 @@
     "typescript": "^2.6.1"
   },
   "bin": {
-    "turk": "bin/turk"
+    "turk": "bin/turk.js"
   },
   "scripts": {
     "prepare": "tsc -d",

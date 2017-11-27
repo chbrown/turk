@@ -1,23 +1,23 @@
-import * as _ from 'lodash';
-import * as request from 'request';
-import * as crypto from 'crypto';
+import * as _ from 'lodash'
+import * as request from 'request'
+import * as crypto from 'crypto'
 
-type StringObject = {[index: string]: string};
+export type StringObject = {[index: string]: string}
 
 export function splitStrings(args: string[]): StringObject {
-  var object: StringObject = {};
+  const object: StringObject = {}
   args.forEach(arg => {
-    var [key, value] = arg.split('=');
-    object[key] = value;
-  });
-  return object;
+    const [key, value] = arg.split('=')
+    object[key] = value
+  })
+  return object
 }
 
 class APIError implements Error {
-  public name: string = 'APIError';
+  public name: string = 'APIError'
   constructor(public code: string, public message: string) { }
   toString() {
-    return `${this.code}: ${this.message}`;
+    return `${this.code}: ${this.message}`
   }
 }
 
@@ -88,9 +88,9 @@ Generate a AWS Mechanical Turk API request signature; see http://docs.aws.amazon
 Returns a base64-encoded string
 */
 function sign(AWSSecretAccessKey: string, Service: string, Operation: string, Timestamp: string) {
-  var hmac = crypto.createHmac('sha1', AWSSecretAccessKey);
-  hmac.update(Service + Operation + Timestamp);
-  return hmac.digest('base64');
+  const hmac = crypto.createHmac('sha1', AWSSecretAccessKey)
+  hmac.update(Service + Operation + Timestamp)
+  return hmac.digest('base64')
 }
 
 /**
@@ -100,7 +100,7 @@ that specified how to do this sort of thing? We could call it, say, "JSON" or
 some silly name like that.)
 */
 function serialize(params) {
-  var serialized = {};
+  const serialized = {}
   _.each(params, (value, key) => {
     if (value === undefined) {
       // ignore undefined values
@@ -112,44 +112,48 @@ function serialize(params) {
       // &QualificationRequirement.2.IntegerValue=1
       _.each(value, (item, index) => {
         _.each(item, (value, sub_key) => {
-          serialized[`${key}.${index}.${sub_key}`] = value;
-        });
-      });
+          serialized[`${key}.${index}.${sub_key}`] = value
+        })
+      })
     }
     // else if (value.toXML) {
     //   // not sure if this is the best approach. I really doubt it.
     //   // Maybe each possible AWS parameter object should inherit some AWSSerializable interace?
-    //   serialized[key] = value.toXML();
+    //   serialized[key] = value.toXML()
     // }
     else if (typeof value == 'object') {
-      // if (value.toJSON) value = value.toJSON();
+      // if (value.toJSON) value = value.toJSON()
       // &BonusAmount.1.Amount=5
       // &BonusAmount.1.CurrencyCode=USD
       _.each(value, (value, sub_key) => {
-        serialized[`${key}.1.${sub_key}`] = value;
-      });
+        serialized[`${key}.1.${sub_key}`] = value
+      })
     }
     else {
       // &Reason=Thanks%20for%20doing%20great%20work!
-      serialized[key] = value;
+      serialized[key] = value
     }
-  });
-  return serialized;
+  })
+  return serialized
 }
 
-interface PostParameters {
-  Operation: string;
-  [index: string]: any;
+export interface PostParameters {
+  Operation: string
+  [index: string]: any
 }
+export function isPostParameters(params: StringObject): params is PostParameters {
+  return 'Operation' in params
+}
+
 
 interface APIRequest {
-  AWSAccessKeyId: string;
-  Service: string;
-  Operation: string;
-  Signature: string;
-  Timestamp: string;
-  ResponseGroup?: string;
-  Version?: string;
+  AWSAccessKeyId: string
+  Service: string
+  Operation: string
+  Signature: string
+  Timestamp: string
+  ResponseGroup?: string
+  Version?: string
 }
 
 /**
@@ -163,23 +167,23 @@ export class Account {
   constructor(public AWSAccessKeyId: string, public AWSSecretAccessKey: string) { }
 
   createConnection(environment: Environment = Environment.production): Connection {
-    return new Connection(this, environment);
+    return new Connection(this, environment)
   }
 }
 
 export class Connection {
-  Version: string = '2014-08-15';
-  Service: string = 'AWSMechanicalTurkRequester';
+  Version: string = '2014-08-15'
+  Service: string = 'AWSMechanicalTurkRequester'
   constructor(public account: Account, public environment: Environment) { }
 
   get url() {
     return (this.environment == Environment.production) ?
       'https://mechanicalturk.amazonaws.com' :
-      'https://mechanicalturk.sandbox.amazonaws.com';
+      'https://mechanicalturk.sandbox.amazonaws.com'
   }
 
   private _prepareOptions(params: PostParameters): request.Options {
-    let Timestamp = new Date().toISOString();
+    let Timestamp = new Date().toISOString()
     let request_parameters: APIRequest = {
       AWSAccessKeyId: this.account.AWSAccessKeyId,
       Service: this.Service,
@@ -187,9 +191,9 @@ export class Connection {
       Signature: sign(this.account.AWSSecretAccessKey, this.Service, params.Operation, Timestamp),
       Timestamp: Timestamp,
       Version: this.Version,
-    };
-    let form = serialize(_.extend(request_parameters, params));
-    return { form: form, url: this.url };
+    }
+    let form = serialize(_.extend(request_parameters, params))
+    return { form: form, url: this.url }
   }
 
   /**
@@ -214,13 +218,13 @@ export class Connection {
       }
   */
   post(params: PostParameters, callback: (error: Error, xml?: string) => void) {
-    var options = this._prepareOptions(params);
+    const options = this._prepareOptions(params)
     request.post(options, (error, response, xml) => {
-      callback(error, xml);
-    });
+      callback(error, xml)
+    })
   }
 
   get(operation: string, params: any, callback: (error: Error, result?: any) => void) {
-    throw new Error('Not yet implemented');
+    throw new Error('Not yet implemented')
   }
 }
