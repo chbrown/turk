@@ -31,6 +31,7 @@
     "turk": "bin/turk"
   },
   "scripts": {
-    "test": "mocha test"
+    "prepare": "tsc -d",
+    "clean": "tsc -d --listEmittedFiles | sed 's/^TSFILE: //' | xargs rm -v"
   }
 }
