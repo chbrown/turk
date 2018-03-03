@@ -18,15 +18,15 @@
     "Micah Silverman"
   ],
   "dependencies": {
-    "optimist": "^0.6.1",
     "lodash": "^3.10.1",
+    "optimist": "^0.6.1",
     "request": "^2.83.0"
   },
   "devDependencies": {
-    "@types/request": "^2.0.8",
     "@types/lodash": "^3.10.2",
     "@types/node": "latest",
     "@types/optimist": "latest",
+    "@types/request": "^2.0.8",
     "typescript": "^2.6.1"
   },
   "bin": {
