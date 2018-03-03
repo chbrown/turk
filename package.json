@@ -25,9 +25,9 @@
   "devDependencies": {
     "@types/lodash": "^3.10.2",
     "@types/node": "latest",
-    "@types/optimist": "latest",
-    "@types/request": "^2.0.8",
-    "typescript": "^2.6.1"
+    "@types/optimist": "^0.0.29",
+    "@types/request": "^2.47.0",
+    "typescript": "^2.7.2"
   },
   "bin": {
     "turk": "bin/turk.js"
