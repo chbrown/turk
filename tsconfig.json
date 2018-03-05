@@ -4,6 +4,7 @@
     "target": "ES5"
   },
   "files": [
+    "tests/index.ts",
     "index.ts"
   ]
 }
