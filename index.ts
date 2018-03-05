@@ -1,9 +1,11 @@
 import * as _ from 'lodash'
 import * as request from 'request'
-import * as crypto from 'crypto'
+import {createHmac} from 'crypto'
 import * as optimist from 'optimist'
 
-export type StringObject = {[index: string]: string}
+export interface StringObject {
+  [index: string]: string
+}
 
 export function splitStrings(args: string[]): StringObject {
   const object: StringObject = {}
@@ -13,16 +15,6 @@ export function splitStrings(args: string[]): StringObject {
   })
   return object
 }
-
-class APIError implements Error {
-  public name: string = 'APIError'
-  constructor(public code: string, public message: string) { }
-  toString() {
-    return `${this.code}: ${this.message}`
-  }
-}
-
-// class DataStructure { }
 
 export class Locale {
   constructor(public Country: string, public Subdivision: string) { }
@@ -46,7 +38,7 @@ export enum ComparatorType {
   Exists,
   DoesNotExist,
   In,
-  NotIn
+  NotIn,
 }
 
 export class QualificationRequirement {
@@ -74,22 +66,24 @@ export class QualificationRequirement {
       Worker_Locale: '00000000000000000071',
       Worker_Adult: '00000000000000000060',
       Worker_PercentAssignmentsApproved: '000000000000000000L0',
-    }
+    },
   }
 }
 
 /**
-Generate a AWS Mechanical Turk API request signature; see http://docs.aws.amazon.com/AWSMechTurk/latest/AWSMechanicalTurkRequester/MakingRequests_RequestAuthenticationArticle.html#CalcReqSig
+Generate a AWS Mechanical Turk API request signature.
 
-- secretAccessKey: Your AWS Secret Access Key
-- service: The service name
-- operation: The operation to perform
-- timestamp: The timestamp to be sent with the mturk message.
+See http://docs.aws.amazon.com/AWSMechTurk/latest/AWSMechanicalTurkRequester/MakingRequests_RequestAuthenticationArticle.html#CalcReqSig
+
+- AWSSecretAccessKey: Your AWS Secret Access Key
+- Service: The service name
+- Operation: The operation to perform
+- Timestamp: The timestamp to be sent with the mturk message.
 
 Returns a base64-encoded string
 */
 function sign(AWSSecretAccessKey: string, Service: string, Operation: string, Timestamp: string) {
-  const hmac = crypto.createHmac('sha1', AWSSecretAccessKey)
+  const hmac = createHmac('sha1', AWSSecretAccessKey)
   hmac.update(Service + Operation + Timestamp)
   return hmac.digest('base64')
 }
@@ -100,8 +94,8 @@ objects, like lists. (Gosh, wouldn't it be handy if there were some standard
 that specified how to do this sort of thing? We could call it, say, "JSON" or
 some silly name like that.)
 */
-function serialize(params) {
-  const serialized = {}
+function serialize(params: {[index: string]: any}): StringObject {
+  const serialized: StringObject = {}
   _.each(params, (value, key) => {
     if (value === undefined) {
       // ignore undefined values
@@ -112,8 +106,8 @@ function serialize(params) {
       // &QualificationRequirement.2.QualificationTypeId=237HSIANVCI00EXAMPLE
       // &QualificationRequirement.2.IntegerValue=1
       _.each(value, (item, index) => {
-        _.each(item, (value, sub_key) => {
-          serialized[`${key}.${index}.${sub_key}`] = value
+        _.each(item, (subValue, subKey) => {
+          serialized[`${key}.${index}.${subKey}`] = subValue
         })
       })
     }
@@ -126,8 +120,8 @@ function serialize(params) {
       // if (value.toJSON) value = value.toJSON()
       // &BonusAmount.1.Amount=5
       // &BonusAmount.1.CurrencyCode=USD
-      _.each(value, (value, sub_key) => {
-        serialized[`${key}.1.${sub_key}`] = value
+      _.each(value, (subValue, subKey) => {
+        serialized[`${key}.1.${subKey}`] = subValue
       })
     }
     else {
@@ -145,7 +139,6 @@ export interface PostParameters {
 export function isPostParameters(params: StringObject): params is PostParameters {
   return 'Operation' in params
 }
-
 
 interface APIRequest {
   AWSAccessKeyId: string
@@ -173,28 +166,24 @@ export class Account {
 }
 
 export class Connection {
-  Version: string = '2014-08-15'
   Service: string = 'AWSMechanicalTurkRequester'
+  Version: string = '2014-08-15'
   constructor(public account: Account, public environment: Environment) { }
 
-  get url() {
-    return (this.environment == Environment.production) ?
+  get url(): string {
+    return this.environment == Environment.production ?
       'https://mechanicalturk.amazonaws.com' :
       'https://mechanicalturk.sandbox.amazonaws.com'
   }
 
   private _prepareOptions(params: PostParameters): request.Options {
-    let Timestamp = new Date().toISOString()
-    let request_parameters: APIRequest = {
-      AWSAccessKeyId: this.account.AWSAccessKeyId,
-      Service: this.Service,
-      Operation: params.Operation,
-      Signature: sign(this.account.AWSSecretAccessKey, this.Service, params.Operation, Timestamp),
-      Timestamp: Timestamp,
-      Version: this.Version,
-    }
-    let form = serialize(_.extend(request_parameters, params))
-    return { form: form, url: this.url }
+    const {Service, Version, url, account: {AWSAccessKeyId, AWSSecretAccessKey}} = this
+    const {Operation} = params
+    const Timestamp = new Date().toISOString()
+    const Signature = sign(AWSSecretAccessKey, Service, Operation, Timestamp)
+    const requestParameters: APIRequest = {AWSAccessKeyId, Service, Operation, Signature, Timestamp, Version}
+    const form = serialize({...requestParameters, ...params})
+    return {form, url}
   }
 
   /**
@@ -218,14 +207,17 @@ export class Connection {
         "request": ...
       }
   */
-  post(params: PostParameters, callback: (error: Error, xml?: string) => void) {
+  post(params: PostParameters,
+       callback: (error: Error, xml?: string) => void) {
     const options = this._prepareOptions(params)
-    request.post(options, (error, response, xml) => {
+    request.post(options, (error: Error, response, xml: string) => {
       callback(error, xml)
     })
   }
 
-  get(operation: string, params: any, callback: (error: Error, result?: any) => void) {
+  get(operation: string,
+      params: any,
+      callback: (error: Error, result?: any) => void) {
     throw new Error('Not yet implemented')
   }
 }
@@ -238,11 +230,11 @@ export function main() {
   turk Operation=GetAccountBalance -- get your account balance`)
   .options({
     accessKeyId: {
-      describe: 'AWS Access Key',
+      describe: 'AWS Access Key ID',
       default: process.env.AWS_ACCESS_KEY_ID,
     },
     secretAccessKey: {
-      describe: 'AWS Secret Key',
+      describe: 'AWS Secret Access Key',
       default: process.env.AWS_SECRET_ACCESS_KEY,
     },
     production: {
@@ -268,10 +260,11 @@ export function main() {
   const argv = argvparser.argv
 
   if (argv.version) {
-    console.log(require('./package.json').version)
+    const {version} = require('./package.json')
+    process.stdout.write(`${version}\n`)
   }
   else if (argv.help) {
-    optimist.showHelp()
+    argvparser.showHelp()
   }
   else {
     const params = splitStrings(argv._)
@@ -280,13 +273,13 @@ export function main() {
     const connection = account.createConnection(environment)
     if (isPostParameters(params)) {
       connection.post(params, (err, xml) => {
-        if (err) return console.error(err)
+        if (err) throw err
 
-        console.log(xml)
+        process.stdout.write(`${xml}\n`)
       })
     }
     else {
-      throw new Error('"Operation" field must be provided in params string.');
+      throw new Error('"Operation" field must be provided as CLI argument.')
     }
   }
 }
