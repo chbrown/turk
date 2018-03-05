@@ -4,7 +4,6 @@
     "target": "ES5"
   },
   "files": [
-    "bin/turk.ts",
     "index.ts"
   ]
 }
