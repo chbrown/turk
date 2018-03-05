@@ -165,6 +165,11 @@ export class Account {
   createConnection(environment: Environment = Environment.production): Connection {
     return new Connection(this, environment)
   }
+
+  static fromEnvironment(accessKeyIdVar = 'AWS_ACCESS_KEY_ID',
+                         secretAccessKeyVar = 'AWS_SECRET_ACCESS_KEY'): Account {
+    return new Account(process.env[accessKeyIdVar], process.env[secretAccessKeyVar])
+  }
 }
 
 export class Connection {
