@@ -18,12 +18,10 @@
     "Micah Silverman"
   ],
   "dependencies": {
-    "lodash": "^3.10.1",
     "optimist": "^0.6.1",
     "request": "^2.83.0"
   },
   "devDependencies": {
-    "@types/lodash": "^3.10.2",
     "@types/node": "latest",
     "@types/optimist": "^0.0.29",
     "@types/request": "^2.47.0",

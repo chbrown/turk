@@ -1,4 +1,3 @@
-import * as _ from 'lodash'
 import * as request from 'request'
 import {createHmac} from 'crypto'
 import * as optimist from 'optimist'
@@ -96,7 +95,8 @@ some silly name like that.)
 */
 function serialize(params: {[index: string]: any}): StringObject {
   const serialized: StringObject = {}
-  _.each(params, (value, key) => {
+  Object.keys(params).forEach(key => {
+    const value = params[key]
     if (value === undefined) {
       // ignore undefined values
     }
@@ -105,8 +105,9 @@ function serialize(params: {[index: string]: any}): StringObject {
       // &QualificationRequirement.1.IntegerValue=18
       // &QualificationRequirement.2.QualificationTypeId=237HSIANVCI00EXAMPLE
       // &QualificationRequirement.2.IntegerValue=1
-      _.each(value, (item, index) => {
-        _.each(item, (subValue, subKey) => {
+      value.forEach((item, index) => {
+        Object.keys(item).forEach(subKey => {
+          const subValue = item[subKey]
           serialized[`${key}.${index}.${subKey}`] = subValue
         })
       })
@@ -120,7 +121,8 @@ function serialize(params: {[index: string]: any}): StringObject {
       // if (value.toJSON) value = value.toJSON()
       // &BonusAmount.1.Amount=5
       // &BonusAmount.1.CurrencyCode=USD
-      _.each(value, (subValue, subKey) => {
+      Object.keys(value).forEach(subKey => {
+        const subValue = value[subKey]
         serialized[`${key}.1.${subKey}`] = subValue
       })
     }
